@@ -3,7 +3,7 @@ import css from "./Header.module.css"
 
 const Header = () => {
   return (
-    <div>
+    
         <header className={css.header}>
   <Link href="/" aria-label="Home">
     NoteHub
@@ -19,7 +19,7 @@ const Header = () => {
     </ul>
   </nav>
 </header>
-</div>
+
   )
 }
 

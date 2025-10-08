@@ -2,12 +2,12 @@
 'use client'
 
 import css from "./Notes.module.css"
-import { useState } from "react";
-import Pagination from "@/components/Pagination/page";
-import NoteList from "@/components/NoteList/page";
-import Modal from "@/components/Modal/page";
-import NoteForm from "@/components/NoteForm/page";
-import SearchBox from "@/components/SearchBox/page";
+import { useEffect, useState } from "react";
+import Pagination from "@/components/Pagination/Pagination";
+import NoteList from "@/components/NoteList/NoteList";
+import Modal from "@/components/Modal/Modal";
+import NoteForm from "@/components/NoteForm/NoteForm";
+import SearchBox from "@/components/SearchBox/SearchBox";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchNotes  } from "@/lib/api";
 import type {FetchNotesResponse} from "@/lib/api";
@@ -16,6 +16,16 @@ const Notes = () => {
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [searchInput, setSearchInput] = useState("")
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearch(searchInput);
+      setPage(1); 
+    }, 500); 
+
+    return () => clearTimeout(handler);
+  }, [searchInput]);
   
   const perPage = 12;
   const {data, isLoading, error} = useQuery<FetchNotesResponse>({
@@ -29,16 +39,10 @@ const Notes = () => {
     
     <div className={css.app}>
 	<header className={css.toolbar}>
-		<SearchBox onSearch={(value) => {
-      setSearch((prev)=> {
-        if(prev !== value) {
-          setPage(1)
-        }
-        return value;
-      })
+		<SearchBox onSearch={setSearchInput } />
      
 
-    }}/>
+   
 {totalPages > 1 && (
 <Pagination
  pageCount={totalPages}

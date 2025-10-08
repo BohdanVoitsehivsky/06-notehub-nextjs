@@ -1,4 +1,4 @@
-import Modal from '@/components/Modal/page';
+import Modal from '@/components/Modal/Modal';
 import css from './DeleteConfirmModal.module.css';
 
 interface DeleteConfirmModalProps {
